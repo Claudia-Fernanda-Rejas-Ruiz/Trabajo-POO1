@@ -2,11 +2,16 @@
 #include<vector>
 #include<cstring>
 #include"ventaVector.h"
+#include"clienteVector.h"
 //Crear un Objeto
 VentaVector ventaVector;//Instancia de la clase AlumnoVector
 //Prototipos
+ClienteVector clienteVector;
+
+
 void 	menuDeOpciones();
 void 	adicionarVentas();
+void 	adicionarClientes();
 void 	eliminarVentas();
 void	modificarVentas();
 void	buscarVenta();
@@ -23,30 +28,70 @@ void menuDeOpciones()
 	do
 	{
 		cout<<"MENU DE OPCIONES\n";
-		cout<<"Ingresar Nuevas Ventas		[1]\n";
-		cout<<"Eliminar las Ventas		[2]\n";
-		cout<<"Modificar las Ventas		[3]\n";
-		cout<<"Buscar las Ventas		[4]\n";
-		cout<<"Listar de Ventas		[5]\n";
-		cout<<"Salir				[6]\n";
-		cout<<"Ingrese una opcion[1-6]:";
+		cout<<"Ingresar cliente	[1]\n";
+		cout<<"Ingresar Nuevas Ventas		[2]\n";
+		cout<<"Eliminar las Ventas		[3]\n";
+		cout<<"Modificar las Ventas		[4]\n";
+		cout<<"Buscar las Ventas		[5]\n";
+		cout<<"Listar de Ventas		[6]\n";
+		cout<<"Salir				[7]\n";
+		cout<<"Ingrese una opcion[1-7]:";
 		cin>>opt;
 		switch(opt)
 		{
-			case 1:	system("cls");
+			case 1: system("cls");
+				adicionarClientes();
+					break;
+			case 2:	system("cls");
 					adicionarVentas();
 					break;
-			case 2:system("cls");eliminarVentas();break;
-			case 3:system("cls");modificarVentas();break;
-			case 4:system("cls");buscarVenta();break;
-			case 5:	system("cls");listarVentas();break;
-			case 6:	cout<<"###########Gracias por tu compra##########\n";
+			case 3:system("cls");eliminarVentas();break;
+			case 4:system("cls");modificarVentas();break;
+			case 5:system("cls");buscarVenta();break;
+			case 6:	system("cls");listarVentas();break;
+			case 7:	cout<<"###########Gracias por tu compra##########\n";
 					exit(0);
 					break;
 			default:cout<<"Ingrese una opcion correcta[1-6]"<<endl;
 		}
 	}
-	while(opt!=6);
+	while(opt!=7);
+}
+void adicionarClientes()
+{
+	//Crear Variables
+	int 	ord,
+        cod;
+	string 	nom,
+			rpta;
+	//Crear el Objeto de la clase alumno
+	do
+	{	
+		//Entrada de datos
+		ord = clienteVector.getCorrelativo();
+		
+		cout<<"Cliente número: "<<ord<<endl;
+		cin.ignore();
+		cout<<"Ingresar Nombre:";
+		getline(cin,nom);
+    cout<<"Ingresar su DNI (código):";
+		cin>>cod;
+		
+		Cliente cliente;/*Crear el Objeto*/
+		
+		cliente.setOrden(ord);
+    cliente.setCodigo(cod);
+		cliente.setNombre(nom);
+		
+		clienteVector.add(cliente);//Agregar el Objeto al vector dinamico
+		
+		clienteVector.grabarEnArchivo(cliente);
+		cout<<"¿Desea agregar a otro cliente? (SI o si):";
+		cin>>rpta;
+		system("cls");//Limpiar
+	}
+	while(rpta=="SI" || rpta=="si");
+
 }
 void adicionarVentas()
 {
